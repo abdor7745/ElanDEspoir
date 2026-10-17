@@ -1,20 +1,23 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# CSPS Élan d'Espoir
 
-# Run and deploy your AI Studio app
+Site vitrine officiel du Centre de Santé et de Promotion Sociale d'Élan d'Espoir, basé à Ouagadougou, Burkina Faso.
 
-This contains everything you need to run your app locally.
+## Fonctionnalités
 
-View your app in AI Studio: https://ai.studio/apps/38d5fe3a-c068-48ae-b593-8655d911300c
+- Présentation du centre et de ses services
+- Page équipe médicale
+- Formulaire de demande de rendez-vous en ligne avec envoi d'email automatique
+- Design responsive mobile et desktop
 
-## Run Locally
+## Stack technique
 
-**Prerequisites:**  Node.js
+- React 18
+- Vite
+- Tailwind CSS v4
+- Framer Motion
+- EmailJS
+- Vercel
 
+## Lien
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+https://elan-d-espoir.vercel.app/
