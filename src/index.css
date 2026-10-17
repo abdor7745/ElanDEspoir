@@ -30,6 +30,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
   body {
     @apply text-slate-900 overflow-x-hidden;

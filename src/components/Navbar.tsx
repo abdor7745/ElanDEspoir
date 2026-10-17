@@ -11,6 +11,7 @@ export const Navbar = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -23,11 +24,28 @@ export const Navbar = () => {
     { name: 'Contact', href: '#contact' },
   ];
 
+  const appointmentHref = '#appointment';
+
+  const handleMobileNavClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    const target = href === '#' ? document.body : document.getElementById(href.slice(1));
+
+    if (!target) {
+      return;
+    }
+
+    event.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setIsOpen(false);
+  };
+
   return (
-    <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'
-      }`}
+    <nav
+      aria-label="Navigation principale"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
@@ -51,30 +69,33 @@ export const Navbar = () => {
           <Phone size={14} className="fill-current" />
           <span className="text-[10px] font-bold uppercase tracking-wider">Urgence : {CLINIC_INFO.phone}</span>
         </div>
-        
+
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a 
-              key={link.name} 
+            <a
+              key={link.name}
               href={link.href}
               className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors"
             >
               {link.name}
             </a>
           ))}
-          <a 
-            href="#appointment"
+          <a
+            href={appointmentHref}
             className="bg-primary-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-700 transition-all shadow-md shadow-primary-600/20 active:scale-95"
           >
-            Prendre RDV
+            Prendre rendez-vous
           </a>
         </div>
 
         {/* Mobile Menu Button */}
-        <button 
+        <button
+          type="button"
           className="md:hidden text-slate-800"
           onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+          aria-expanded={isOpen}
         >
           {isOpen ? <X /> : <Menu />}
         </button>
@@ -87,25 +108,26 @@ export const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
+            id="mobile-navigation"
             className="md:hidden bg-white border-t border-slate-100 overflow-hidden"
           >
             <div className="px-6 py-6 flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a 
-                  key={link.name} 
+                <a
+                  key={link.name}
                   href={link.href}
                   className="text-lg font-medium text-slate-800"
-                  onClick={() => setIsOpen(false)}
+                  onClick={(event) => handleMobileNavClick(event, link.href)}
                 >
                   {link.name}
                 </a>
               ))}
-              <a 
-                href="#appointment"
+              <a
+                href={appointmentHref}
                 className="bg-primary-600 text-white text-center py-4 rounded-xl font-bold"
-                onClick={() => setIsOpen(false)}
+                onClick={(event) => handleMobileNavClick(event, appointmentHref)}
               >
-                Prendre Rendez-vous
+                Prendre rendez-vous
               </a>
             </div>
           </motion.div>
